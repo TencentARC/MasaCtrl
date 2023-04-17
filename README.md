@@ -9,7 +9,7 @@ Pytorch implementation of MasaCtrl: Tuning-free Mutual Self-Attention Control fo
 [Report (coming soon)] **|** [Project Page](https://ljzycmd.github.io/projects/MasaCtrl/)
 
 <div align="center">
-<img src="assets/overview.png">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/overview.png">
 <i> MasaCtrl enables performing various consistent non-rigid image synthesis and editing without fine-tuning and optimization. </i>
 </div>
 
@@ -28,10 +28,10 @@ MasaCtrl can perform prompt-based image synthesis and editing that changes the l
 >*The target layout is synthesized directly from the target prompt.*
 
 <div align="center">
-<img src="assets/results_synthetic.png">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_synthetic.png">
 <i>Consistent synthesis results</i>
 
-<img src="assets/results_real.png">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_real.png">
 <i>Real image editing results</i>
 </div>
 
@@ -43,7 +43,7 @@ Directly modifying the text prompts often cannot generate target layout of desir
 >*The target layout controlled by additional guidance.*
 
 <div align="center">
-<img src="assets/results_w_adapter.png">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_w_adapter.png">
 <i>Synthesis (left part) and editing (right part) results with T2I-Adapter</i>
 </div>
 
@@ -53,7 +53,7 @@ Directly modifying the text prompts often cannot generate target layout of desir
 Our method also generalize well to other Stable-Diffusion-based models.
 
 <div align="center">
-<img src="assets/anythingv4_synthetic.png">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/anythingv4_synthetic.png">
 <i>Results on Anything-V4</i>
 </div>
 
