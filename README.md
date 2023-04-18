@@ -1,12 +1,12 @@
 ## MasaCtrl: Tuning-free <span style="text-decoration: underline"><font color="Tomato">M</font></span>utu<span style="text-decoration: underline"><font color="Tomato">a</font></span>l <span style="text-decoration: underline"><font color="Tomato">S</font></span>elf-<span style="text-decoration: underline"><font color="Tomato">A</font></span>ttention <span style="text-decoration: underline"><font color="Tomato">Control</font></span> for Consistent Image Synthesis and Editing
 
-Pytorch implementation of MasaCtrl: Tuning-free Mutual Self-Attention Control for **Consistent Image Synthesis and Editing**
+Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control for **Consistent Image Synthesis and Editing**](https://arxiv.org/abs/2304.08465)
 
-[Mingdeng Cao](https://github.com/ljzycmd), [Xintao Wang](https://xinntao.github.io/), [Zhongang Qi](https://scholar.google.com/citations?user=zJvrrusAAAAJ), [Ying Shan](https://scholar.google.com/citations?user=4oXBp9UAAAAJ), [Xiaohu Qie](), [Yinqiang Zheng](https://scholar.google.com/citations?user=JD-5DKcAAAAJ)
+[Mingdeng Cao](https://github.com/ljzycmd), [Xintao Wang](https://xinntao.github.io/), [Zhongang Qi](https://scholar.google.com/citations?user=zJvrrusAAAAJ), [Ying Shan](https://scholar.google.com/citations?user=4oXBp9UAAAAJ), [Xiaohu Qie](https://scholar.google.com/citations?user=mk-F69UAAAAJ), [Yinqiang Zheng](https://scholar.google.com/citations?user=JD-5DKcAAAAJ)
 
 ---
 
-[Report (coming soon)] **|** [Project Page](https://ljzycmd.github.io/projects/MasaCtrl/)
+[arXiv](https://arxiv.org/abs/2304.08465) **|** [Project page](https://ljzycmd.github.io/projects/MasaCtrl/)
 
 <div align="center">
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/overview.png">
@@ -86,6 +86,19 @@ You can download personlized models from [CIVITAI](https://civitai.com/) or trai
 ## Acknowledgements
 
 We thank awesome research works [Prompt-to-Prompt](https://github.com/google/prompt-to-prompt), [T2I-Adapter](https://github.com/TencentARC/T2I-Adapter).
+
+## Citation
+
+```bibtex
+@misc{cao2023masactrl,
+      title={MasaCtrl: Tuning-Free Mutual Self-Attention Control for Consistent Image Synthesis and Editing}, 
+      author={Mingdeng Cao and Xintao Wang and Zhongang Qi and Ying Shan and Xiaohu Qie and Yinqiang Zheng},
+      year={2023},
+      eprint={2304.08465},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+    }
+```
 
 
 ## Contact
