@@ -1,4 +1,4 @@
-# MasaCtrl -- Mutual Self-Attention Control
+## MasaCtrl: Tuning-free <span style="text-decoration: underline"><font color="Tomato">M</font></span>utu<span style="text-decoration: underline"><font color="Tomato">a</font></span>l <span style="text-decoration: underline"><font color="Tomato">S</font></span>elf-<span style="text-decoration: underline"><font color="Tomato">A</font></span>ttention <span style="text-decoration: underline"><font color="Tomato">Control</font></span> for Consistent Image Synthesis and Editing
 
 Pytorch implementation of MasaCtrl: Tuning-free Mutual Self-Attention Control for **Consistent Image Synthesis and Editing**
 
