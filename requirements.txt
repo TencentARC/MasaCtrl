@@ -1,0 +1,3 @@
+diffusers==0.15.0
+transformers
+opencv-python
