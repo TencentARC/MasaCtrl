@@ -2,16 +2,26 @@
 
 Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control for **Consistent Image Synthesis and Editing**](https://arxiv.org/abs/2304.08465)
 
-[Mingdeng Cao](https://github.com/ljzycmd), [Xintao Wang](https://xinntao.github.io/), [Zhongang Qi](https://scholar.google.com/citations?user=zJvrrusAAAAJ), [Ying Shan](https://scholar.google.com/citations?user=4oXBp9UAAAAJ), [Xiaohu Qie](https://scholar.google.com/citations?user=mk-F69UAAAAJ), [Yinqiang Zheng](https://scholar.google.com/citations?user=JD-5DKcAAAAJ)
-
----
+[Mingdeng Cao](https://github.com/ljzycmd),
+[Xintao Wang](https://xinntao.github.io/),
+[Zhongang Qi](https://scholar.google.com/citations?user=zJvrrusAAAAJ),
+[Ying Shan](https://scholar.google.com/citations?user=4oXBp9UAAAAJ),
+[Xiaohu Qie](https://scholar.google.com/citations?user=mk-F69UAAAAJ),
+[Yinqiang Zheng](https://scholar.google.com/citations?user=JD-5DKcAAAAJ)
 
 [arXiv](https://arxiv.org/abs/2304.08465) **|** [Project page](https://ljzycmd.github.io/projects/MasaCtrl/)
+
+---
 
 <div align="center">
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/overview.png">
 <i> MasaCtrl enables performing various consistent non-rigid image synthesis and editing without fine-tuning and optimization. </i>
 </div>
+
+## Updates
+
+- [2023/4/25] Code released.
+- [2023/4/17] Paper is available [here](https://arxiv.org/abs/2304.08465).
 
 
 ## Introduction
@@ -58,7 +68,7 @@ Our method also generalize well to other Stable-Diffusion-based models.
 </div>
 
 
-## Usage (Under Construction)
+## Usage
 
 ### Requirements
 We implement our method with [diffusers](https://github.com/huggingface/diffusers) code base with similar code structure to [Prompt-to-Prompt](https://github.com/google/prompt-to-prompt). The code runs on Python 3.8.5 with Pytorch 1.11. Conda environment is highly recommended.
@@ -81,6 +91,10 @@ You can download personlized models from [CIVITAI](https://civitai.com/) or trai
 ### Notebook Demo
 
 **The notebook `playground.ipynb` provides the synthesis samples.**
+
+### MasaCtrl with T2I-Adapter
+
+Will be releasing soon.
 
 
 ## Acknowledgements
