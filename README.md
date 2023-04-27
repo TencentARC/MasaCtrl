@@ -90,6 +90,8 @@ You can download personlized models from [CIVITAI](https://civitai.com/) or trai
 
 ### Notebook Demo
 
+To run the synthesis with MasaCtrl, single GPU with at least 16 GB VRAM is required. 
+
 **The notebook `playground.ipynb` provides the synthesis samples.**
 
 ### MasaCtrl with T2I-Adapter
@@ -117,4 +119,4 @@ We thank awesome research works [Prompt-to-Prompt](https://github.com/google/pro
 
 ## Contact
 
-If your have any comments or questions, please [open a new issue]() or feel free to contact [Mingdeng Cao](https://github.com/ljzycmd) and [Xintao Wang](https://xinntao.github.io/).
+If your have any comments or questions, please [open a new issue](https://github.com/TencentARC/MasaCtrl/issues/new/choose) or feel free to contact [Mingdeng Cao](https://github.com/ljzycmd) and [Xintao Wang](https://xinntao.github.io/).
