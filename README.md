@@ -9,7 +9,9 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 [Xiaohu Qie](https://scholar.google.com/citations?user=mk-F69UAAAAJ),
 [Yinqiang Zheng](https://scholar.google.com/citations?user=JD-5DKcAAAAJ)
 
-[arXiv](https://arxiv.org/abs/2304.08465) **|** [Project page](https://ljzycmd.github.io/projects/MasaCtrl/)
+[![arXiv](https://img.shields.io/badge/ArXiv-2304.08465-brightgreen)](https://arxiv.org/abs/2304.08465)
+[![Project page](https://img.shields.io/badge/Project-Page-brightgreen)](https://ljzycmd.github.io/projects/MasaCtrl/)
+[![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl)
 
 ---
 
@@ -18,8 +20,10 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 <i> MasaCtrl enables performing various consistent non-rigid image synthesis and editing without fine-tuning and optimization. </i>
 </div>
 
+
 ## Updates
 
+- [2023/4/28] [Hugging Face demo](https://huggingface.co/spaces/TencentARC/MasaCtrl) released.
 - [2023/4/25] Code released.
 - [2023/4/17] Paper is available [here](https://arxiv.org/abs/2304.08465).
 
