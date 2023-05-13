@@ -23,6 +23,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 
 ## Updates
 
+- [2023/5/13] The inference code of MasaCtrl with T2I-Adapter is available.
 - [2023/4/28] [Hugging Face demo](https://huggingface.co/spaces/TencentARC/MasaCtrl) released.
 - [2023/4/25] Code released.
 - [2023/4/17] Paper is available [here](https://arxiv.org/abs/2304.08465).
@@ -96,12 +97,36 @@ You can download personlized models from [CIVITAI](https://civitai.com/) or trai
 
 To run the synthesis with MasaCtrl, single GPU with at least 16 GB VRAM is required. 
 
-**The notebook `playground.ipynb` provides the synthesis samples.**
+**The notebook `playground.ipynb` and `playground_real.ipynb` provide the synthesis and real editing samples, respectively.**
 
 ### MasaCtrl with T2I-Adapter
 
-Will be releasing soon.
+Install [T2I-Adapter](https://github.com/TencentARC/T2I-Adapter) and prepare the checkpoints following their provided tutorial. Assuming it has been successfully installed and the root directory is `T2I-Adapter`. 
 
+Thereafter copy the core `masactrl` package and the inference code `masactrl_w_adapter.py` to the root directory of T2I-Adapter
+
+```bash
+cp MasaCtrl/masactrl T2I-Adapter/
+cp masactrl_w_adapter.py T2I-Adapter/
+```
+
+Last, you can inference the images with following command (with sketch adapter)
+
+```bash
+python masactrl_w_adapter.py \
+--which_cond sketch \
+--cond_path_src SOURCE_CONDITION_PATH \
+--cond_path CONDITION_PATH \
+--cond_inp_type sketch \
+--prompt_src "A bear walking in the forest" \
+--prompt "A bear standing in the forest" \
+--sd_ckpt models/sd-v1-4.ckpt \
+--resize_short_edge 512 \
+--cond_tau 1.0 \
+--cond_weight 1.0 \
+--n_samples 1 \
+--adapter_ckpt models/t2iadapter_sketch_sd14v1.pth
+```
 
 ## Acknowledgements
 
