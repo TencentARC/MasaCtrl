@@ -104,7 +104,7 @@ The notebook `playground.ipynb` and `playground_real.ipynb` provide the synthesi
 
 **Online demos**
 
-We provide the [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl) demo with Gradio app. Note that you may copy the demo into your own space to use the GPU.
+We provide [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl) with Gradio app. Note that you may copy the demo into your own space to use the GPU.
 
 The [![demo](https://img.shields.io/badge/Demo-Colab-brightgreen)](https://colab.research.google.com/drive/1DZeQn2WvRBsNg4feS1bJrwWnIzw1zLJq?usp=sharing) is also available. 
 
@@ -124,7 +124,7 @@ Install [T2I-Adapter](https://github.com/TencentARC/T2I-Adapter) and prepare the
 Thereafter copy the core `masactrl` package and the inference code `masactrl_w_adapter.py` to the root directory of T2I-Adapter
 
 ```bash
-cp MasaCtrl/masactrl T2I-Adapter/
+cp -r MasaCtrl/masactrl T2I-Adapter/
 cp masactrl_w_adapter.py T2I-Adapter/
 ```
 
@@ -146,9 +146,13 @@ python masactrl_w_adapter.py \
 --adapter_ckpt models/t2iadapter_sketch_sd14v1.pth
 ```
 
+You can download the sketch examples [here](https://huggingface.co/TencentARC/MasaCtrl/tree/main/sketch_example).
+
+
 ## Acknowledgements
 
 We thank awesome research works [Prompt-to-Prompt](https://github.com/google/prompt-to-prompt), [T2I-Adapter](https://github.com/TencentARC/T2I-Adapter).
+
 
 ## Citation
 
