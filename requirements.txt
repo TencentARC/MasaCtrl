@@ -1,3 +1,6 @@
 diffusers==0.15.0
 transformers
 opencv-python
+einops
+omegaconf
+pytorch_lightning

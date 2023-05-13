@@ -12,6 +12,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 [![arXiv](https://img.shields.io/badge/ArXiv-2304.08465-brightgreen)](https://arxiv.org/abs/2304.08465)
 [![Project page](https://img.shields.io/badge/Project-Page-brightgreen)](https://ljzycmd.github.io/projects/MasaCtrl/)
 [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl)
+[![demo](https://img.shields.io/badge/Demo-Colab-brightgreen)](https://colab.research.google.com/drive/1DZeQn2WvRBsNg4feS1bJrwWnIzw1zLJq?usp=sharing)
 
 ---
 
@@ -93,11 +94,28 @@ You can download these checkpoints on their official repository and [Hugging Fac
 You can download personlized models from [CIVITAI](https://civitai.com/) or train your own customized models.
 
 
-### Notebook Demo
+### Demos
+
+**Notebook demos**
 
 To run the synthesis with MasaCtrl, single GPU with at least 16 GB VRAM is required. 
 
-**The notebook `playground.ipynb` and `playground_real.ipynb` provide the synthesis and real editing samples, respectively.**
+The notebook `playground.ipynb` and `playground_real.ipynb` provide the synthesis and real editing samples, respectively.
+
+**Online demos**
+
+We provide the [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl) demo with Gradio app. Note that you may copy the demo into your own space to use the GPU.
+
+The [![demo](https://img.shields.io/badge/Demo-Colab-brightgreen)](https://colab.research.google.com/drive/1DZeQn2WvRBsNg4feS1bJrwWnIzw1zLJq?usp=sharing) is also available. 
+
+**Local Gradio demo**
+
+You can launch the provided Gradio demo locally with
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python app.py
+```
+
 
 ### MasaCtrl with T2I-Adapter
 
