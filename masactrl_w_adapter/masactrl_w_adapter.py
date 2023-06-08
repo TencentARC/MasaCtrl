@@ -2,9 +2,11 @@ import os
 
 import cv2
 import torch
+import torch.nn.functional as F
 from basicsr.utils import tensor2img
 from pytorch_lightning import seed_everything
 from torch import autocast
+from torchvision.io import read_image
 
 from ldm.inference_base import (diffusion_inference, get_adapters, get_base_argument_parser, get_sd_models)
 from ldm.modules.extra_condition import api
@@ -43,6 +45,30 @@ def main():
         default=None,
         help="the prompt to synthesize the source image",
     )
+    parser.add_argument(
+        "--src_img_path",
+        type=str,
+        default=None,
+        help="the input real source image path"
+    )
+    parser.add_argument(
+        "--start_code_path",
+        type=str,
+        default=None,
+        help="the inverted start code path to synthesize the source image",
+    )
+    parser.add_argument(
+        "--masa_step",
+        type=int,
+        default=4,
+        help="the starting step for MasaCtrl",
+    )
+    parser.add_argument(
+        "--masa_layer",
+        type=int,
+        default=10,
+        help="the starting layer for MasaCtrl",
+    )
 
     opt = parser.parse_args()
     which_cond = opt.which_cond
@@ -69,8 +95,8 @@ def main():
     process_cond_module = getattr(api, f'get_cond_{which_cond}')
 
     # [MasaCtrl added] default STEP and LAYER params for MasaCtrl
-    STEP = 4
-    LAYER = 10
+    STEP = opt.masa_step if opt.masa_step is not None else 4
+    LAYER = opt.masa_layer if opt.masa_layer is not None else 10
 
     # inference
     with torch.inference_mode(), \
@@ -79,9 +105,6 @@ def main():
         for test_idx, cond_path in enumerate(image_paths):
             seed_everything(opt.seed)
             for v_idx in range(opt.n_samples):
-                editor = MutualSelfAttentionControl(STEP, LAYER)
-                regiter_attention_editor_ldm(sd_model, editor)
-
                 # seed_everything(opt.seed+v_idx+test_idx)
                 if opt.cond_path_src:
                     cond_src = process_cond_module(opt, opt.cond_path_src, opt.cond_inp_type, cond_model)
@@ -106,11 +129,11 @@ def main():
                     adapter_features = [torch.cat([feats] * 2) for feats in adapter_features]
 
                 # prepare the batch prompts
-                if opt.prompt_src:
+                if opt.prompt_src is not None:
                     prompts = [opt.prompt_src, opt.prompt]
                 else:
                     prompts = [opt.prompt] * 2
-
+                print("promts: ", prompts)
                 # get text embedding
                 c = sd_model.get_learned_conditioning(prompts)
                 if opt.scale != 1.0:
@@ -123,8 +146,42 @@ def main():
                     opt.H = 512
                     opt.W = 512
                 shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
-                start_code = torch.randn([1, *shape], device=opt.device)
+                if opt.src_img_path: # perform ddim inversion
+                    
+                    src_img = read_image(opt.src_img_path)
+                    src_img = src_img.float() / 255.  # input normalized image [0, 1]
+                    src_img = src_img * 2 - 1
+                    if src_img.dim() == 3:
+                        src_img = src_img.unsqueeze(0)
+                    src_img = F.interpolate(src_img, (opt.H, opt.W))
+                    src_img = src_img.to(opt.device)
+                    # obtain initial latent
+                    encoder_posterior = sd_model.encode_first_stage(src_img)
+                    src_x_0 = sd_model.get_first_stage_encoding(encoder_posterior)
+                    start_code, latents_dict = sampler.ddim_sampling_reverse(
+                        num_steps=opt.steps,
+                        x_0=src_x_0,
+                        conditioning=uc[:1],  # you may change here during inversion
+                        unconditional_guidance_scale=opt.scale,
+                        unconditional_conditioning=uc[:1],
+                    )
+                    torch.save(
+                        {
+                            "start_code": start_code
+                        },
+                        os.path.join(opt.outdir, "start_code.pth"),
+                    )
+                elif opt.start_code_path:
+                    # load the inverted start code
+                    start_code_dict = torch.load(opt.start_code_path)
+                    start_code = start_code_dict.get("start_code").to(opt.device)
+                else:
+                    start_code = torch.randn([1, *shape], device=opt.device)
                 start_code = start_code.expand(len(prompts), -1, -1, -1)
+
+                # hijack the attention module
+                editor = MutualSelfAttentionControl(STEP, LAYER)
+                regiter_attention_editor_ldm(sd_model, editor)
 
                 samples_latents, _ = sampler.sample(
                     S=opt.steps,

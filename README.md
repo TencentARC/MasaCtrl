@@ -125,7 +125,7 @@ Thereafter copy the core `masactrl` package and the inference code `masactrl_w_a
 
 ```bash
 cp -r MasaCtrl/masactrl T2I-Adapter/
-cp masactrl_w_adapter.py T2I-Adapter/
+cp MasaCtrl/masactrl_w_adapter/masactrl_w_adapter.py T2I-Adapter/
 ```
 
 Last, you can inference the images with following command (with sketch adapter)
@@ -146,12 +146,32 @@ python masactrl_w_adapter.py \
 --adapter_ckpt models/t2iadapter_sketch_sd14v1.pth
 ```
 
-You can download the sketch examples [here](https://huggingface.co/TencentARC/MasaCtrl/tree/main/sketch_example).
+NOTE: You can download the sketch examples [here](https://huggingface.co/TencentARC/MasaCtrl/tree/main/sketch_example).
 
+For real image, the DDIM inversion is performed to invert the image into the noise map, thus we add the inversion process into the original DDIM sampler. **You should replace the original file `T2I-Adapter/ldm/models/diffusion/ddim.py` with the exteneded version `MasaCtrl/masactrl_w_adapter/ddim.py` to enable the inversion function**. Then you can edit the real image with following command (with sketch adapter)
+
+```bash
+python masactrl_w_adapter.py \
+--src_img_path SOURCE_IMAGE_PATH \
+--cond_path CONDITION_PATH \
+--cond_inp_type image \
+--prompt_src "" \
+--prompt "a photo of a man wearing black t-shirt, giving a thumbs up" \
+--sd_ckpt models/sd-v1-4.ckpt \
+--resize_short_edge 512 \
+--cond_tau 1.0 \
+--cond_weight 1.0 \
+--n_samples 1 \
+--which_cond sketch \
+--adapter_ckpt models/t2iadapter_sketch_sd14v1.pth \
+--outdir ./workdir/masactrl_w_adapter_inversion/black-shirt
+```
+
+NOTE: You can download the real image editing example [here](https://huggingface.co/TencentARC/MasaCtrl/tree/main/black_shirt_example).
 
 ## Acknowledgements
 
-We thank awesome research works [Prompt-to-Prompt](https://github.com/google/prompt-to-prompt), [T2I-Adapter](https://github.com/TencentARC/T2I-Adapter).
+We thank the awesome research works [Prompt-to-Prompt](https://github.com/google/prompt-to-prompt), [T2I-Adapter](https://github.com/TencentARC/T2I-Adapter).
 
 
 ## Citation
