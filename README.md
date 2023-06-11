@@ -17,7 +17,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 ---
 
 <div align="center">
-<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/overview.png">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/overview.gif">
 <i> MasaCtrl enables performing various consistent non-rigid image synthesis and editing without fine-tuning and optimization. </i>
 </div>
 
@@ -29,6 +29,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 - [2023/4/25] Code released.
 - [2023/4/17] Paper is available [here](https://arxiv.org/abs/2304.08465).
 
+---
 
 ## Introduction
 
@@ -74,6 +75,16 @@ Our method also generalize well to other Stable-Diffusion-based models.
 </div>
 
 
+### 4 Extension to Video Synthesis
+
+With dense consistent guidance, MasaCtrl enables video synthesis
+
+<div align="center">
+<img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_w_adapter_consistent.png">
+<i>Video Synthesis Results (with keypose and canny guidance)</i>
+</div>
+
+
 ## Usage
 
 ### Requirements
@@ -104,9 +115,7 @@ The notebook `playground.ipynb` and `playground_real.ipynb` provide the synthesi
 
 **Online demos**
 
-We provide [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl) with Gradio app. Note that you may copy the demo into your own space to use the GPU.
-
-The [![demo](https://img.shields.io/badge/Demo-Colab-brightgreen)](https://colab.research.google.com/drive/1DZeQn2WvRBsNg4feS1bJrwWnIzw1zLJq?usp=sharing) is also available. 
+We provide [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl) with Gradio app. Note that you may copy the demo into your own space to use the GPU. Online Colab demo [![demo](https://img.shields.io/badge/Demo-Colab-brightgreen)](https://colab.research.google.com/drive/1DZeQn2WvRBsNg4feS1bJrwWnIzw1zLJq?usp=sharing) is also available. 
 
 **Local Gradio demo**
 
