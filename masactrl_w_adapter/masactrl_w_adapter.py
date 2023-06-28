@@ -191,6 +191,7 @@ def main():
                     verbose=False,
                     unconditional_guidance_scale=opt.scale,
                     unconditional_conditioning=uc,
+                    ld = latents_dict,
                     x_T=start_code,
                     features_adapter=adapter_features,
                     append_to_context=append_to_context,
