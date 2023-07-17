@@ -97,9 +97,7 @@ pip install -r requirements.txt
 ### Checkpoints
 
 **Stable Diffusion:**
-We mainly conduct expriemnts on Stable Diffusion v1-4, while our method can generalize to other versions (like v1-5).
-
-You can download these checkpoints on their official repository and [Hugging Face](https://huggingface.co/).
+We mainly conduct expriemnts on Stable Diffusion v1-4, while our method can generalize to other versions (like v1-5). You can download these checkpoints on their official repository and [Hugging Face](https://huggingface.co/).
 
 **Personalized Models:**
 You can download personlized models from [CIVITAI](https://civitai.com/) or train your own customized models.
@@ -136,6 +134,8 @@ Thereafter copy the core `masactrl` package and the inference code `masactrl_w_a
 cp -r MasaCtrl/masactrl T2I-Adapter/
 cp MasaCtrl/masactrl_w_adapter/masactrl_w_adapter.py T2I-Adapter/
 ```
+
+**[Updates]** Or you can clone the repo [MasaCtrl-w-T2I-Adapter](https://github.com/ljzycmd/T2I-Adapter-w-MasaCtrl) directly to your local space.
 
 Last, you can inference the images with following command (with sketch adapter)
 
