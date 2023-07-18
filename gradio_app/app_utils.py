@@ -13,7 +13,7 @@ torch.set_grad_enabled(False)
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device(
     "cpu")
-model_path = "andite/anything-v4.0"
+model_path = "xyn-ai/anything-v4.0"
 scheduler = DDIMScheduler(beta_start=0.00085,
                           beta_end=0.012,
                           beta_schedule="scaled_linear",

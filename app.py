@@ -29,10 +29,10 @@ with gr.Blocks(css="style.css") as demo:
     gr.Markdown(TITLE)
     gr.Markdown(DESCRIPTION)
     model_path_gr = gr.Dropdown(
-        ["andite/anything-v4.0",
+        ["xyn-ai/anything-v4.0",
          "CompVis/stable-diffusion-v1-4",
          "runwayml/stable-diffusion-v1-5"],
-        value="andite/anything-v4.0",
+        value="xyn-ai/anything-v4.0",
         label="Model", info="Select the model to use!"
     )
     with gr.Tab("Consistent Synthesis"):
