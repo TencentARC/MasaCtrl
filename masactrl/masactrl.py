@@ -12,7 +12,12 @@ from torchvision.utils import save_image
 
 
 class MutualSelfAttentionControl(AttentionBase):
-    def __init__(self, start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50):
+    MODEL_TYPE = {
+        "SD": 16,
+        "SDXL": 70
+    }
+
+    def __init__(self, start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50, model_type="SD"):
         """
         Mutual self-attention control for Stable-Diffusion model
         Args:
@@ -21,17 +26,22 @@ class MutualSelfAttentionControl(AttentionBase):
             layer_idx: list of the layers to apply mutual self-attention control
             step_idx: list the steps to apply mutual self-attention control
             total_steps: the total number of steps
+            model_type: the model type, SD or SDXL
         """
         super().__init__()
         self.total_steps = total_steps
+        self.total_layers = self.MODEL_TYPE.get(model_type, 16)
         self.start_step = start_step
         self.start_layer = start_layer
-        self.layer_idx = layer_idx if layer_idx is not None else list(range(start_layer, 16))
+        self.layer_idx = layer_idx if layer_idx is not None else list(range(start_layer, self.total_layers))
         self.step_idx = step_idx if step_idx is not None else list(range(start_step, total_steps))
-        print("step_idx: ", self.step_idx)
-        print("layer_idx: ", self.layer_idx)
+        print("MasaCtrl at denoising steps: ", self.step_idx)
+        print("MasaCtrl at U-Net layers: ", self.layer_idx)
 
     def attn_batch(self, q, k, v, sim, attn, is_cross, place_in_unet, num_heads, **kwargs):
+        """
+        Performing attention for a batch of queries, keys, and values
+        """
         b = q.shape[0] // num_heads
         q = rearrange(q, "(b h) n d -> h (b n) d", h=num_heads)
         k = rearrange(k, "(b h) n d -> h (b n) d", h=num_heads)
@@ -62,8 +72,47 @@ class MutualSelfAttentionControl(AttentionBase):
         return out
 
 
+class MutualSelfAttentionControlUnion(MutualSelfAttentionControl):
+    def __init__(self, start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50, model_type="SD"):
+        """
+        Mutual self-attention control for Stable-Diffusion model with unition source and target [K, V]
+        Args:
+            start_step: the step to start mutual self-attention control
+            start_layer: the layer to start mutual self-attention control
+            layer_idx: list of the layers to apply mutual self-attention control
+            step_idx: list the steps to apply mutual self-attention control
+            total_steps: the total number of steps
+            model_type: the model type, SD or SDXL
+        """
+        super().__init__(start_step, start_layer, layer_idx, step_idx, total_steps, model_type)
+
+    def forward(self, q, k, v, sim, attn, is_cross, place_in_unet, num_heads, **kwargs):
+        """
+        Attention forward function
+        """
+        if is_cross or self.cur_step not in self.step_idx or self.cur_att_layer // 2 not in self.layer_idx:
+            return super().forward(q, k, v, sim, attn, is_cross, place_in_unet, num_heads, **kwargs)
+
+        qu_s, qu_t, qc_s, qc_t = q.chunk(4)
+        ku_s, ku_t, kc_s, kc_t = k.chunk(4)
+        vu_s, vu_t, vc_s, vc_t = v.chunk(4)
+        attnu_s, attnu_t, attnc_s, attnc_t = attn.chunk(4)
+
+        # source image branch
+        out_u_s = super().forward(qu_s, ku_s, vu_s, sim, attnu_s, is_cross, place_in_unet, num_heads, **kwargs)
+        out_c_s = super().forward(qc_s, kc_s, vc_s, sim, attnc_s, is_cross, place_in_unet, num_heads, **kwargs)
+
+        # target image branch, concatenating source and target [K, V]
+        out_u_t = self.attn_batch(qu_t, torch.cat([ku_s, ku_t]), torch.cat([vu_s, vu_t]), sim[:num_heads], attnu_t, is_cross, place_in_unet, num_heads, **kwargs)
+        out_c_t = self.attn_batch(qc_t, torch.cat([kc_s, kc_t]), torch.cat([vc_s, vc_t]), sim[:num_heads], attnc_t, is_cross, place_in_unet, num_heads, **kwargs)
+
+        out = torch.cat([out_u_s, out_u_t, out_c_s, out_c_t], dim=0)
+
+        return out
+
+
 class MutualSelfAttentionControlMask(MutualSelfAttentionControl):
-    def __init__(self,  start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50, mask_s=None, mask_t=None, mask_save_dir=None):
+    def __init__(self,  start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50,  mask_s=None, mask_t=None, mask_save_dir=None, model_type="SD"):
         """
         Maske-guided MasaCtrl to alleviate the problem of fore- and background confusion
         Args:
@@ -74,8 +123,10 @@ class MutualSelfAttentionControlMask(MutualSelfAttentionControl):
             total_steps: the total number of steps
             mask_s: source mask with shape (h, w)
             mask_t: target mask with same shape as source mask
+            mask_save_dir: the path to save the mask image
+            model_type: the model type, SD or SDXL
         """
-        super().__init__(start_step, start_layer, layer_idx, step_idx, total_steps)
+        super().__init__(start_step, start_layer, layer_idx, step_idx, total_steps, model_type)
         self.mask_s = mask_s  # source mask with shape (h, w)
         self.mask_t = mask_t  # target mask with same shape as source mask
         print("Using mask-guided MasaCtrl")
@@ -143,7 +194,7 @@ class MutualSelfAttentionControlMask(MutualSelfAttentionControl):
 
 
 class MutualSelfAttentionControlMaskAuto(MutualSelfAttentionControl):
-    def __init__(self, start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50, thres=0.1, ref_token_idx=[1], cur_token_idx=[1], mask_save_dir=None):
+    def __init__(self, start_step=4, start_layer=10, layer_idx=None, step_idx=None, total_steps=50, thres=0.1, ref_token_idx=[1], cur_token_idx=[1], mask_save_dir=None, model_type="SD"):
         """
         MasaCtrl with mask auto generation from cross-attention map
         Args:
@@ -157,8 +208,8 @@ class MutualSelfAttentionControlMaskAuto(MutualSelfAttentionControl):
             cur_token_idx: the token index list for cross-attention map aggregation
             mask_save_dir: the path to save the mask image
         """
-        super().__init__(start_step, start_layer, layer_idx, step_idx, total_steps)
-        print("using MutualSelfAttentionControlMaskAuto")
+        super().__init__(start_step, start_layer, layer_idx, step_idx, total_steps, model_type)
+        print("Using MutualSelfAttentionControlMaskAuto")
         self.thres = thres
         self.ref_token_idx = ref_token_idx
         self.cur_token_idx = cur_token_idx
@@ -178,6 +229,9 @@ class MutualSelfAttentionControlMaskAuto(MutualSelfAttentionControl):
         self.cross_attns = []
 
     def attn_batch(self, q, k, v, sim, attn, is_cross, place_in_unet, num_heads, **kwargs):
+        """
+        Performing attention for a batch of queries, keys, and values
+        """
         B = q.shape[0] // num_heads
         H = W = int(np.sqrt(q.shape[1]))
         q = rearrange(q, "(b h) n d -> h (b n) d", h=num_heads)

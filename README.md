@@ -13,6 +13,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 [![Project page](https://img.shields.io/badge/Project-Page-brightgreen)](https://ljzycmd.github.io/projects/MasaCtrl/)
 [![demo](https://img.shields.io/badge/Demo-Hugging%20Face-brightgreen)](https://huggingface.co/spaces/TencentARC/MasaCtrl)
 [![demo](https://img.shields.io/badge/Demo-Colab-brightgreen)](https://colab.research.google.com/drive/1DZeQn2WvRBsNg4feS1bJrwWnIzw1zLJq?usp=sharing)
+[![Open in OpenXLab](https://cdn-static.openxlab.org.cn/app-center/openxlab_app.svg)](https://openxlab.org.cn/apps/detail/MingDengCao/MasaCtrl)
 
 ---
 
@@ -24,6 +25,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 
 ## Updates
 
+- [2023/8/20] MasaCtrl supports SDXL (and other variants) now. ![sdxl_example](https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/sdxl_example.jpg)
 - [2023/5/13] The inference code of MasaCtrl with T2I-Adapter is available.
 - [2023/4/28] [Hugging Face demo](https://huggingface.co/spaces/TencentARC/MasaCtrl) released.
 - [2023/4/25] Code released.
@@ -33,7 +35,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 
 ## Introduction
 
-We propose MasaCtrl, a tuning-free method for non-rigid consistent image synthesis and editing. The key idea is to combine the `contents` from the *source image* and the `layout` synthesized from *text prompt and additional controls* into the desired synthesized or edited image, with **Mutual Self-Attention Control**.
+We propose MasaCtrl, a tuning-free method for non-rigid consistent image synthesis and editing. The key idea is to combine the `contents` from the *source image* and the `layout` synthesized from *text prompt and additional controls* into the desired synthesized or edited image, by querying semantically correlated features with **Mutual Self-Attention Control**.
 
 
 ## Main Features
@@ -44,6 +46,7 @@ MasaCtrl can perform prompt-based image synthesis and editing that changes the l
 
 >*The target layout is synthesized directly from the target prompt.*
 
+<details><summary>View visual results</summary>
 <div align="center">
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_synthetic.png">
 <i>Consistent synthesis results</i>
@@ -51,6 +54,8 @@ MasaCtrl can perform prompt-based image synthesis and editing that changes the l
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_real.png">
 <i>Real image editing results</i>
 </div>
+</details>
+
 
 
 ### 2 Integration to Controllable Diffusion Models
@@ -59,30 +64,35 @@ Directly modifying the text prompts often cannot generate target layout of desir
 
 >*The target layout controlled by additional guidance.*
 
+<details><summary>View visual results</summary>
 <div align="center">
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_w_adapter.png">
 <i>Synthesis (left part) and editing (right part) results with T2I-Adapter</i>
 </div>
-
+</details>
 
 ### 3 Generalization to Other Models: Anything-V4
 
 Our method also generalize well to other Stable-Diffusion-based models.
 
+<details><summary>View visual results</summary>
 <div align="center">
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/anythingv4_synthetic.png">
 <i>Results on Anything-V4</i>
 </div>
+</details>
 
 
 ### 4 Extension to Video Synthesis
 
 With dense consistent guidance, MasaCtrl enables video synthesis
 
+<details><summary>View visual results</summary>
 <div align="center">
 <img src="https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/results_w_adapter_consistent.png">
 <i>Video Synthesis Results (with keypose and canny guidance)</i>
 </div>
+</details>
 
 
 ## Usage
