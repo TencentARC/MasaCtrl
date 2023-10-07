@@ -196,17 +196,17 @@ We thank the awesome research works [Prompt-to-Prompt](https://github.com/google
 ## Citation
 
 ```bibtex
-@misc{cao2023masactrl,
-      title={MasaCtrl: Tuning-Free Mutual Self-Attention Control for Consistent Image Synthesis and Editing}, 
-      author={Mingdeng Cao and Xintao Wang and Zhongang Qi and Ying Shan and Xiaohu Qie and Yinqiang Zheng},
-      year={2023},
-      eprint={2304.08465},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-    }
+@InProceedings{cao_2023_masactrl,
+    author    = {Cao, Mingdeng and Wang, Xintao and Qi, Zhongang and Shan, Ying and Qie, Xiaohu and Zheng, Yinqiang},
+    title     = {MasaCtrl: Tuning-Free Mutual Self-Attention Control for Consistent Image Synthesis and Editing},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2023},
+    pages     = {22560-22570}
+}
 ```
 
 
 ## Contact
 
-If your have any comments or questions, please [open a new issue](https://github.com/TencentARC/MasaCtrl/issues/new/choose) or feel free to contact [Mingdeng Cao](https://github.com/ljzycmd) and [Xintao Wang](https://xinntao.github.io/).
+If you have any comments or questions, please [open a new issue](https://github.com/TencentARC/MasaCtrl/issues/new/choose) or feel free to contact [Mingdeng Cao](https://github.com/ljzycmd) and [Xintao Wang](https://xinntao.github.io/).
