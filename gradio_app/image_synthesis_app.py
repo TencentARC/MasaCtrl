@@ -95,7 +95,7 @@ def create_demo_synthesis():
                                                 maximum=16,
                                                 value=10,
                                                 step=1)
-                run_btn = gr.Button(label="Run")
+                run_btn = gr.Button(value="Run")
             with gr.Column():
                 appended_prompt = gr.Textbox(label="Appended Prompt", value='')
                 negative_prompt = gr.Textbox(label="Negative Prompt", value='')
