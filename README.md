@@ -24,7 +24,7 @@ Pytorch implementation of [MasaCtrl: Tuning-free Mutual Self-Attention Control f
 
 
 ## Updates
-
+- [2024/8/17] We add AttnProcessor based MasaCtrlProcess, please check `masactrl/masactrl_processor.py` and `run_synthesis_sdxl_processor.py`. You can integrate MasaCtrl into official Diffuser pipeline by register the attention processor. 
 - [2023/8/20] MasaCtrl supports SDXL (and other variants) now. ![sdxl_example](https://huggingface.co/TencentARC/MasaCtrl/resolve/main/assets/sdxl_example.jpg)
 - [2023/5/13] The inference code of MasaCtrl with T2I-Adapter is available.
 - [2023/4/28] [Hugging Face demo](https://huggingface.co/spaces/TencentARC/MasaCtrl) released.
