@@ -71,6 +71,7 @@ class DDIMSampler(object):
                corrector_kwargs=None,
                verbose=True,
                x_T=None,
+               ld = None,
                log_every_t=100,
                unconditional_guidance_scale=1.,
                unconditional_conditioning=None,
@@ -114,6 +115,7 @@ class DDIMSampler(object):
                                                     append_to_context=append_to_context,
                                                     cond_tau=cond_tau,
                                                     style_cond_tau=style_cond_tau,
+                                                    ld = ld,
                                                     )
         return samples, intermediates
 
@@ -124,7 +126,7 @@ class DDIMSampler(object):
                       mask=None, x0=None, img_callback=None, log_every_t=100,
                       temperature=1., noise_dropout=0., score_corrector=None, corrector_kwargs=None,
                       unconditional_guidance_scale=1., unconditional_conditioning=None, features_adapter=None,
-                      append_to_context=None, cond_tau=0.4, style_cond_tau=1.0):
+                      append_to_context=None, cond_tau=0.4, style_cond_tau=1.0,ld = None):
         device = self.model.betas.device
         b = shape[0]
         if x_T is None:
@@ -148,6 +150,10 @@ class DDIMSampler(object):
         for i, step in enumerate(iterator):
             index = total_steps - i - 1
             ts = torch.full((b,), step, device=device, dtype=torch.long)
+            if ld != None:
+                latent_ref = ld['x_inter'][index]
+                _, latents_cur =img.chunk(2)
+                img = torch.cat([latent_ref,latents_cur])
 
             if mask is not None:
                 assert x0 is not None
